@@ -101,5 +101,5 @@ model usuarios {
   nombre   String @db.VarChar(50)
   apellido String @db.VarChar(50)
   email    String @unique(map: "email") @db.VarChar(50)
-  pass     String @db.VarChar(50)
+  pass     String @db.VarChar(100)
 }

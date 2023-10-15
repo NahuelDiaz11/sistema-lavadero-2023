@@ -12,8 +12,10 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.4.2",
+    "bcryptjs": "^2.4.3",
     "express": "^4.18.2",
     "init": "^0.1.2",
+    "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1"
   },
