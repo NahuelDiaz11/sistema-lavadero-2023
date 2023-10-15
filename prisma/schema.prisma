@@ -95,3 +95,11 @@ model vehiculos {
 
   @@index([id_modelo], map: "id_modelo")
 }
+
+model usuarios {
+  id       Int    @id @default(autoincrement())
+  nombre   String @db.VarChar(50)
+  apellido String @db.VarChar(50)
+  email    String @unique(map: "email") @db.VarChar(50)
+  pass     String @db.VarChar(50)
+}
