@@ -1,13 +1,15 @@
 import { Router } from 'express';
 import { authRequired } from '../middlewares/validateToken.js';
-import { getServices,getService,createService,updateService,deleteService } from '../controllers/services.controller.js';
+import { getServices, getService,createService, updateService, deleteService } from '../controllers/services.controller.js';
+import { validateSchema } from '../middlewares/validator.middleware.js';
+import { serviceSchema } from '../schemas/service.schema.js';
 
 const router = Router();
 
 router.get('/services', authRequired, getServices);
 router.get('/services/:id', authRequired, getService);
-router.post('/services', authRequired, createService);
+router.post('/services', validateSchema(serviceSchema), authRequired, createService);
 router.delete('/services/:id', authRequired, deleteService);
-router.put('/services/:id', authRequired, updateService);
+router.put('/services/:id', validateSchema(serviceSchema), authRequired, updateService);
 
 export default router
