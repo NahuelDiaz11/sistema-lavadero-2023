@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 class VehicleService {
+  
   async getVehicles() {
     try {
       const vehicles = await prisma.vehiculos.findMany();

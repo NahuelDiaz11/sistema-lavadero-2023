@@ -9,11 +9,13 @@ datasource db {
 
 model clientes {
   id           Int          @id
+  userId       Int
   nombre       String?      @db.VarChar(15)
+  apellido     String?      @db.VarChar(15)
   id_localidad Int?
   localidades  localidades? @relation(fields: [id_localidad], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "clientes_ibfk_1")
   servicios    servicios[]
-
+  usuario    usuarios     @relation(fields: [userId], references: [id])
   @@index([id_localidad], map: "id_localidad")
 }
 
@@ -102,4 +104,5 @@ model usuarios {
   apellido String @db.VarChar(50)
   email    String @unique(map: "email") @db.VarChar(50)
   pass     String @db.VarChar(100)
+  clientes clientes[] 
 }

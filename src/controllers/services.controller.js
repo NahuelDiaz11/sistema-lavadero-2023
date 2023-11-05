@@ -1,55 +1,56 @@
 import ServiceService from "../services/services.service.js";
 const serviceService = new ServiceService();
 
-export const getVehicles = async (req, res) => {
+export const getServices = async (req, res) => {
   try {
-    const vehicles = await serviceService.getVehicles();
-    res.json(vehicles);
+    const services = await serviceService.getServices();
+    
+    res.json(services);
   } catch (error) {
-    console.error("Error fetching vehicles:", error);
-    res.status(500).json({ error: "Error fetching vehicles" });
+    console.error("Error fetching services:", error);
+    res.status(500).json({ error: "Error fetching services" });
   }
 };
 
-export const createVehicle = async (req, res) => {
-  const vehicleData = req.body;
+export const createService = async (req, res) => {
+  const serviceData = req.body;
   try {
-    const newVehicle = await serviceService.createVehicle(vehicleData);
-    res.json(newVehicle);
+    const newService = await serviceService.createService(serviceData);
+    res.json(newService);
   } catch (error) {
-    res.status(500).json({ error: "Error creating a vehicle" });
+    res.status(500).json({ error: "Error creating a service" });
   }
 };
 
-export const getVehicle = async (req, res) => {
-  const vehicleId = parseInt(req.params.id);
+export const getService = async (req, res) => {
+  const serviceId = parseInt(req.params.id);
   try {
-    const vehicle = await serviceService.getVehicleById(vehicleId);
-    return res.json(vehicle);
+    const service = await serviceService.getServiceById(serviceId);
+    return res.json(service);
   } catch (error) {
-    res.status(500).json({ error: "Vehicle not found" });
+    res.status(500).json({ error: "Service not found" });
   }
 };
 
-export const updateVehicle = async (req, res) => {
-  const vehicleId = parseInt(req.params.id);
-  const vehicleData = req.body;
+export const updateService = async (req, res) => {
+  const serviceId = parseInt(req.params.id);
+  const serviceData = req.body;
   try {
-    await serviceService.updateVehicle(vehicleId, vehicleData);
+    await serviceService.updateService(serviceId, serviceData);
 
-    res.status(200).json({ message: "Vehicle correctly updated" });
+    res.status(200).json({ message: "Service correctly updated" });
   } catch (error) {
-    res.status(500).json({ error: "Vehicle not found" });
+    res.status(500).json({ error: "Service not found" });
   }
 };
 
-export const deleteVehicle = async (req, res) => {
-  const vehicleId = parseInt(req.params.id);
+export const deleteService = async (req, res) => {
+  const serviceId = parseInt(req.params.id);
 
   try {
-    await serviceService.deleteVehicle(vehicleId);
-    res.json({ message: "Vehicle deleted successfully" });
+    await serviceService.deleteService(serviceId);
+    res.json({ message: "Service deleted successfully" });
   } catch (error) {
-    res.status(500).json({ error: "Vehicle not found" });
+    res.status(500).json({ error: "Service not found" });
   }
 };
