@@ -75,11 +75,11 @@ function LoginPage() {
                   <div className="input-group input-group-merge">
                     <input
                       type="password"
-                      id="password"
+                      id="pass"
                       className="form-control"
-                      name="password"
+                      name="pass"
                       placeholder="•••••••••••••"
-                      {...register("password", { required: true, minLength: 6 })}
+                      {...register("pass", { required: true, minLength: 6 })}
                       aria-describedby="password"
                     />
                     <span className="input-group-text cursor-pointer">
