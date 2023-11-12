@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { createCustomerRequest } from "../api/customers";
 
 const CustomerContext = createContext();
 
@@ -16,8 +17,10 @@ export const useCustomers = () => {
 export function CustomerProvider({ children }) {
   const [customers, setCustomers] = useState([]);
 
-  const createCustomer = (customer) => {
+  const createCustomer = async (customer) => {
     console.log("customer");
+    const res = await createCustomerRequest(customer);
+    console.log(res);
   };
   return (
     <CustomerContext.Provider

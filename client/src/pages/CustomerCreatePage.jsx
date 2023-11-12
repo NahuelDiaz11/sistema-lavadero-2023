@@ -14,7 +14,7 @@ export default function CustomerCreatePage() {
   console.log(createCustomer);
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    createCustomer(data);
   });
   return (
     <div className="layout-page">
