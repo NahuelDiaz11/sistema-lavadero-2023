@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
-import { createAccesToken } from "../libs/jwt.js";
+import { createAccessToken } from "../libs/jwt.js";
+import jwt from "jsonwebtoken";
+import { TOKEN_SECRET } from "../config.js";
 
 const prisma = new PrismaClient();
 
@@ -19,7 +21,7 @@ export const register = async (req, res) => {
     });
 
     const userSaved = newUser;
-    const token = await createAccesToken({ id: userSaved.id });
+    const token = await createAccessToken({ id: userSaved.id });
 
     res.cookie("token", token);
 
@@ -44,35 +46,36 @@ export const login = async (req, res) => {
     });
 
     if (!userFound) {
-      return res.status(400).json({ message: "User not found" })
-    };
+      return res.status(400).json({ message: "User not found" });
+    }
 
     const isMatch = await bcrypt.compare(pass, userFound.pass);
 
     if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials" })
+      return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    const token = await createAccesToken({ id: userFound.id });
+    const token = await createAccessToken({ id: userFound.id });
 
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      sameSite: "None", // Configurando SameSite a "None"
+      secure: true,
+    });
     res.json({
       id: userFound.id,
       nombre: userFound.nombre,
       apellido: userFound.apellido,
       email: userFound.email,
-      nombre: userFound.nombre,
     });
   } catch (error) {
-    console.error("Error registering user:", error);
     res.status(500).json({ error: "Error registering user" });
   }
 };
 
 export const logout = (req, res) => {
-  res.cookie('token', '', {
-    expires: new Date(0)
-  })
+  res.cookie("token", "", {
+    expires: new Date(0),
+  });
   return res.sendStatus(200);
 };
 
@@ -93,10 +96,31 @@ export const profile = async (req, res) => {
         email: userFound.email,
       });
     } else {
-      res.status(404).json({ message: 'User not found' });
+      res.status(404).json({ message: "User not found" });
     }
   } catch (error) {
-    console.error('Error when searching for the user:', error);
-    res.status(500).json({ error: 'Error when searching for the user' });
+    console.error("Error when searching for the user:", error);
+    res.status(500).json({ error: "Error when searching for the user" });
   }
+};
+
+export const verifyTokenRequest = async (req, res) => {
+  const { token } = req.cookies;
+
+  if (!token) return res.status(401).json({ message: "Unauthorized" });
+
+  jwt.verify(token, TOKEN_SECRET, async (err, user) => {
+    if (!token) return res.status(401).json({ message: "Unauthorized" });
+
+    const userFound = await prisma.usuarios.findUnique({
+      where: { id: user.id },
+    });
+
+    if (!userFound) return res.status(401).json({ message: "Unauthorized" });
+
+    return res.json({
+      id: userFound.id,
+      email: userFound.email,
+    });
+  });
 };

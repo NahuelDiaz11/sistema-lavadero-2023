@@ -1,16 +1,22 @@
-import express from 'express';
-import morgan from 'morgan';
-import authRoutes from './routes/auth.routes.js';
-import vehicleRoutes from './routes/vehicles.routes.js';
-import customerRoutes from './routes/customers.routes.js';
-import servicesRoutes from './routes/services.routes.js';
-import cookieParser from 'cookie-parser';
-import cors from 'cors';
+import express from "express";
+import morgan from "morgan";
+import authRoutes from "./routes/auth.routes.js";
+import vehicleRoutes from "./routes/vehicles.routes.js";
+import customerRoutes from "./routes/customers.routes.js";
+import servicesRoutes from "./routes/services.routes.js";
+import cookieParser from "cookie-parser";
+import cors from "cors";
 
 const app = express();
 
-app.use(cors());
-app.use(morgan('dev'));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  })
+);
+app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
 
