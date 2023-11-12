@@ -6,22 +6,24 @@ import CustomerPage from "./pages/CustomerPage";
 import CustomerCreatePage from "./pages/CustomerCreatePage";
 import HomePage from "./pages/HomePage";
 import ProtectedRoute from "./ProtectedRoute";
+import { CustomerProvider } from "./context/customerContext";
 
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
+      <CustomerProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
 
-          <Route element={<ProtectedRoute/>}>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/customer" element={<CustomerPage />} />
-            <Route path="/add-customer" element={<CustomerCreatePage />} />
-          </Route>
-
-        </Routes>
-      </BrowserRouter>
+            <Route element={<ProtectedRoute />}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/customer" element={<CustomerPage />} />
+              <Route path="/add-customer" element={<CustomerCreatePage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </CustomerProvider>
     </AuthProvider>
   );
 }
