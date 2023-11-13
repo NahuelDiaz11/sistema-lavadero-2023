@@ -8,14 +8,18 @@ import { useForm } from "react-hook-form";
 import { useCustomers } from "../context/customerContext";
 
 export default function CustomerCreatePage() {
-
   const { register, handleSubmit } = useForm();
   const { createCustomer } = useCustomers();
   console.log(createCustomer);
 
   const onSubmit = handleSubmit((data) => {
+    
+    data.id_localidad = parseInt(data.id_localidad, 10);
+    
+    console.log("Los datos del cliente son:", data);
     createCustomer(data);
   });
+
   return (
     <div className="layout-page">
       <div className="content-wrapper">
@@ -32,7 +36,10 @@ export default function CustomerCreatePage() {
                 <div className="card-body">
                   <form onSubmit={onSubmit}>
                     <div className="mb-3">
-                      <label className="form-label" htmlFor="basic-default-fullname">
+                      <label
+                        className="form-label"
+                        htmlFor="basic-default-fullname"
+                      >
                         Nombre
                       </label>
                       <input
@@ -45,7 +52,10 @@ export default function CustomerCreatePage() {
                       />
                     </div>
                     <div className="mb-3">
-                      <label className="form-label" htmlFor="basic-default-fullname">
+                      <label
+                        className="form-label"
+                        htmlFor="basic-default-fullname"
+                      >
                         Apellido
                       </label>
                       <input
@@ -57,15 +67,61 @@ export default function CustomerCreatePage() {
                       />
                     </div>
                     <div className="mb-3">
-                      <label className="form-label" htmlFor="basic-default-fullname">
+                      <label
+                        className="form-label"
+                        htmlFor="inputGroupSelect02"
+                      >
                         Localidad
                       </label>
+                      <div className="input-group">
+                        <select
+                          className="form-select"
+                          id="inputGroupSelect02"
+                          {...register("id_localidad", { required: true })}
+                          defaultValue="1"
+                        >
+                          <option value="" disabled hidden>
+                            Seleccione...
+                          </option>
+                          <option value="1">Villa Maria</option>
+                          <option value="2">Villa Nueva</option>
+                        </select>
+                        <label
+                          className="input-group-text"
+                          htmlFor="inputGroupSelect02"
+                        >
+                          Opciones
+                        </label>
+                      </div>
+                    </div>
+                    <div className="mb-3">
+                      <label
+                        className="form-label"
+                        htmlFor="basic-default-fullname"
+                      >
+                        Celular
+                      </label>
                       <input
-                        type="text"
+                        type="number"
                         className="form-control"
-                        id="basic-default-localidad"
-                        placeholder="Villa Maria"
-                        {...register("localidad", { required: true })}
+                        id="basic-default-celular"
+                        placeholder="3534262798"
+                        {...register("celular", { required: true })}
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label
+                        className="form-label"
+                        htmlFor="basic-default-fullname"
+                      >
+                        DNI
+                      </label>
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="basic-default-dni"
+                        placeholder="41411200"
+                        {...register("dni", { required: true })}
                       />
                     </div>
                     <button type="submit" className="btn btn-primary">

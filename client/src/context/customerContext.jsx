@@ -18,7 +18,6 @@ export function CustomerProvider({ children }) {
   const [customers, setCustomers] = useState([]);
 
   const createCustomer = async (customer) => {
-    console.log("customer");
     const res = await createCustomerRequest(customer);
     console.log(res);
   };
