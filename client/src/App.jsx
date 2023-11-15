@@ -19,6 +19,7 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/customer" element={<CustomerPage />} />
                 <Route path="/add-customer" element={<CustomerCreatePage />} />
+                <Route path="/customer/:id" element={<CustomerCreatePage />} />
               </Route>
             </Routes>
         </BrowserRouter>

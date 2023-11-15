@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../admin/vendor/css/core.css";
 import "../admin/vendor/css/theme-default.css";
 import "../admin/css/demo.css";
@@ -6,19 +6,37 @@ import "../admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css";
 import "../admin/vendor/css/pages/page-auth.css";
 import { useForm } from "react-hook-form";
 import { useCustomers } from "../context/customerContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function CustomerCreatePage() {
-  const { register, handleSubmit } = useForm();
-  const { createCustomer } = useCustomers();
+  const { register, handleSubmit, setValue} = useForm();
+  const { createCustomer, getCustomer, updateCustomer } = useCustomers();
   const navigate = useNavigate();
+  const params = useParams();
+
+  useEffect(() => {
+   async function loadCustomer() {
+    if (params.id){
+      const customer = await getCustomer(params.id)
+      console.log(customer);
+      setValue('nombre', customer.nombre)
+      setValue('apellido', customer.apellido)
+      setValue('id_localidad', customer.id_localidad)
+      setValue('celular', customer.celular)
+      setValue('dni', customer.dni)
+    }
+   }
+   loadCustomer();
+  }, [])
 
   const onSubmit = handleSubmit((data) => {
-    
     data.id_localidad = parseInt(data.id_localidad, 10);
-    
-    console.log("Los datos del cliente son:", data);
+   if (params.id){
+    updateCustomer(params.id, data);
+   } else {
     createCustomer(data);
+  }
+  navigate("/customer");
   });
 
   return (

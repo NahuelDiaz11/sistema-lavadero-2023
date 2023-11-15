@@ -1,17 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import "../admin/vendor/css/core.css";
 import "../admin/vendor/css/theme-default.css";
 import "../admin/css/demo.css";
 import "../admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css";
 import "../admin/vendor/css/pages/page-auth.css";
-import { useCustomers } from '../context/customerContext';
-import { NavBar } from './../components/NavBar';
+import { useCustomers } from "../context/customerContext";
+import { NavBar } from "./../components/NavBar";
+import "boxicons";
+import "boxicons/css/boxicons.min.css";
+import { Link } from "react-router-dom";
 
 export default function CustomerPage() {
-  const { getCustomers, customers } = useCustomers();
+  const { getCustomers, customers, deleteCustomer } = useCustomers();
   useEffect(() => {
-    getCustomers()
-  },[])
+    getCustomers();
+  }, []);
+  
   return (
     <div className="container-fluid">
       <div className="row">
@@ -35,7 +39,6 @@ export default function CustomerPage() {
                         <th>Número de celular</th>
                         <th>DNI</th>
                         <th>Localidad</th>
-                        <th>Estado</th>
                         <th>Acciones</th>
                       </tr>
                     </thead>
@@ -50,27 +53,19 @@ export default function CustomerPage() {
                           <td>{customer.apellido}</td>
                           <td>{customer.celular}</td>
                           <td>{customer.dni}</td>
-                          <td>{customer.localidad}</td>
+                          <td>{customer.id_localidad}</td>
                           <td>
-                            <span className="badge bg-label-primary me-1">Activo</span>
-                          </td>
-                          <td>
-                            <div className="dropdown">
-                              <button
-                                type="button"
-                                className="btn p-0 dropdown-toggle hide-arrow"
-                                data-bs-toggle="dropdown"
-                              >
-                                <i className="bx bx-dots-vertical-rounded"></i>
+                            <div className="btn-group">
+                              <Link to={`/customer/${customer.id}`} ><button type="button" className="btn p-0">
+                          
+                                <box-icon name="edit" class="me-1" style={{color: 'blue'}}></box-icon>{""}
+                              </button> </Link>
+                              <button  onClick={() => {
+                                deleteCustomer(customer.id)
+                                }}
+                              type="button" className="btn p-0">
+                                <box-icon name="trash" class="me-1" style={{color: 'red'}}></box-icon>{""}
                               </button>
-                              <div className="dropdown-menu">
-                                <a className="dropdown-item" href="javascript:void(0);">
-                                  <i className="bx bx-edit-alt me-1"></i> Editar
-                                </a>
-                                <a className="dropdown-item" href="javascript:void(0);">
-                                  <i className="bx bx-trash me-1"></i> Eliminar
-                                </a>
-                              </div>
                             </div>
                           </td>
                         </tr>
