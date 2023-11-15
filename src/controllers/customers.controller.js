@@ -17,6 +17,7 @@ export const createCustomer = async (req, res) => {
     const newCustomer = await customerService.createCustomer(customerData);
     res.json(newCustomer);
   } catch (error) {
+    console.log("el error es : " + error);
     res.status(500).json({ error: "Error creating a customer" });
   }
 };
@@ -27,6 +28,7 @@ export const getCustomer = async (req, res) => {
     const customer = await customerService.getCustomerById(customerId);
     return res.json(customer);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: "Customer not found" });
   }
 };

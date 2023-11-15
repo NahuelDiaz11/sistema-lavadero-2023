@@ -5,38 +5,35 @@ import "../admin/css/demo.css";
 import "../admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css";
 import "../admin/vendor/css/pages/page-auth.css";
 import { useForm } from "react-hook-form";
-import { useCustomers } from "../context/customerContext";
+import { useVehicles } from "../context/vehicleContext";
 import { useNavigate, useParams } from "react-router-dom";
 
-export default function CustomerCreatePage() {
+export default function VehicleFormPage() {
   const { register, handleSubmit, setValue} = useForm();
-  const { createCustomer, getCustomer, updateCustomer } = useCustomers();
+  const { createVehicle, getVehicle, updateVehicle } = useVehicles();
   const navigate = useNavigate();
   const params = useParams();
 
   useEffect(() => {
-   async function loadCustomer() {
+   async function loadVehicle() {
     if (params.id){
-      const customer = await getCustomer(params.id)
-      console.log(customer);
-      setValue('nombre', customer.nombre)
-      setValue('apellido', customer.apellido)
-      setValue('id_localidad', customer.id_localidad)
-      setValue('celular', customer.celular)
-      setValue('dni', customer.dni)
+      const vehicle = await getVehicle(params.id)
+      console.log(vehicle);
+      setValue('patente', vehicle.patente)
+      setValue('id_modelo', vehicle.id_modelo)
     }
    }
-   loadCustomer();
+   loadVehicle();
   }, [])
 
   const onSubmit = handleSubmit((data) => {
-    data.id_localidad = parseInt(data.id_localidad, 10);
+    data.id_modelo = parseInt(data.id_modelo, 10);
    if (params.id){
-    updateCustomer(params.id, data);
+    updateVehicle(params.id, data);
    } else {
-    createCustomer(data);
+    createVehicle(data);
   }
-  navigate("/customer");
+  navigate("/vehicles");
   });
 
   return (
@@ -50,7 +47,7 @@ export default function CustomerCreatePage() {
             <div className="col-10">
               <div className="card mb-4">
                 <div className="card-header d-flex justify-content-between align-items-center">
-                  <h5 className="mb-0">Datos del Cliente</h5>
+                  <h5 className="mb-0">Datos del Vehiculo</h5>
                 </div>
                 <div className="card-body">
                   <form onSubmit={onSubmit}>
@@ -59,51 +56,37 @@ export default function CustomerCreatePage() {
                         className="form-label"
                         htmlFor="basic-default-fullname"
                       >
-                        Nombre
+                        Patente
                       </label>
                       <input
                         type="text"
                         className="form-control"
                         id="basic-default-fullname"
-                        placeholder="Nahuel"
-                        {...register("nombre", { required: true })}
+                        placeholder="HPS547"
+                        {...register("patente", { required: true })}
                         autoFocus
                       />
                     </div>
-                    <div className="mb-3">
-                      <label
-                        className="form-label"
-                        htmlFor="basic-default-fullname"
-                      >
-                        Apellido
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="basic-default-fullname"
-                        placeholder="Diaz"
-                        {...register("apellido", { required: true })}
-                      />
-                    </div>
+    
                     <div className="mb-3">
                       <label
                         className="form-label"
                         htmlFor="inputGroupSelect02"
                       >
-                        Localidad
+                        Modelo
                       </label>
                       <div className="input-group">
                         <select
                           className="form-select"
                           id="inputGroupSelect02"
-                          {...register("id_localidad", { required: true })}
+                          {...register("id_modelo", { required: true })}
                           defaultValue="1"
                         >
                           <option value="" disabled hidden>
                             Seleccione...
                           </option>
-                          <option value="1">Villa Maria</option>
-                          <option value="2">Villa Nueva</option>
+                          <option value="1">Toyota</option>
+                          <option value="2">Chevrolet</option>
                         </select>
                         <label
                           className="input-group-text"
@@ -113,36 +96,7 @@ export default function CustomerCreatePage() {
                         </label>
                       </div>
                     </div>
-                    <div className="mb-3">
-                      <label
-                        className="form-label"
-                        htmlFor="basic-default-fullname"
-                      >
-                        Celular
-                      </label>
-                      <input
-                        type="number"
-                        className="form-control"
-                        id="basic-default-celular"
-                        placeholder="3534262798"
-                        {...register("celular", { required: true })}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <label
-                        className="form-label"
-                        htmlFor="basic-default-fullname"
-                      >
-                        DNI
-                      </label>
-                      <input
-                        type="number"
-                        className="form-control"
-                        id="basic-default-dni"
-                        placeholder="41411200"
-                        {...register("dni", { required: true })}
-                      />
-                    </div>
+        
                     <button type="submit" className="btn btn-primary">
                       Guardar
                     </button>

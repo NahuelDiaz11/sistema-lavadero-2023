@@ -4,16 +4,16 @@ import "../admin/vendor/css/theme-default.css";
 import "../admin/css/demo.css";
 import "../admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css";
 import "../admin/vendor/css/pages/page-auth.css";
-import { useCustomers } from "../context/customerContext";
+import { useVehicles } from "../context/vehicleContext";
 import { NavBar } from "./../components/NavBar";
 import "boxicons";
 import "boxicons/css/boxicons.min.css";
 import { Link } from "react-router-dom";
 
-export default function CustomerPage() {
-  const { getCustomers, customers, deleteCustomer } = useCustomers();
+export default function VehiclePage() {
+  const { getVehicles, vehicles, deleteVehicle } = useVehicles();
   useEffect(() => {
-    getCustomers();
+    getVehicles();
   }, []);
   
   return (
@@ -27,12 +27,12 @@ export default function CustomerPage() {
             <div className="content-wrapper">
               <div className="container-xxl flex-grow-1 container-p-y">
                 <h4 className="fw-bold py-3 mb-4">
-                  <span className="text-muted fw-light">Listado</span> Clientes
+                  <span className="text-muted fw-light">Listado</span> Vehiculos
                 </h4>
                 <div className="mb-3">
-                  <Link to="/add-customer">
+                  <Link to="/add-vehicle">
                     <button type="button" className="btn btn-primary">
-                      Crear Cliente
+                      Crear Vehiculo
                     </button>
                   </Link>
                 </div>
@@ -41,34 +41,29 @@ export default function CustomerPage() {
                     <thead>
                       <tr>
                         <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Número de celular</th>
-                        <th>DNI</th>
-                        <th>Localidad</th>
+                        <th>Patente</th>
+                        <th>Modelo</th>
                         <th>Acciones</th>
                       </tr>
                     </thead>
                     <tbody className="table-border-bottom-0">
-                      {customers.map((customer) => (
-                        <tr key={customer.id}>
-                          <td>{customer.id}</td>
+                      {vehicles.map((vehicle) => (
+                        <tr key={vehicle.id}>
+                          <td>{vehicle.id}</td>
                           <td>
                             <i className="fab fa-angular fa-lg text-danger me-3"></i>
-                            {customer.nombre}
+                            {vehicle.patente}
                           </td>
-                          <td>{customer.apellido}</td>
-                          <td>{customer.celular}</td>
-                          <td>{customer.dni}</td>
-                          <td>{customer.id_localidad}</td>
+                          <td>{vehicle.id_modelo}</td>
+                     
                           <td>
                             <div className="btn-group">
-                              <Link to={`/customer/${customer.id}`} ><button type="button" className="btn p-0">
+                              <Link to={`/vehicle/${vehicle.id}`} ><button type="button" className="btn p-0">
                           
                                 <box-icon name="edit" class="me-1" style={{color: 'blue'}}></box-icon>{""}
                               </button> </Link>
                               <button  onClick={() => {
-                                deleteCustomer(customer.id)
+                                deleteVehicle(vehicle.id)
                                 }}
                               type="button" className="btn p-0">
                                 <box-icon name="trash" class="me-1" style={{color: 'red'}}></box-icon>{""}

@@ -1,7 +1,11 @@
 import { PrismaClient } from "@prisma/client";
+import { custom } from "zod";
 
 const prisma = new PrismaClient();
 
+BigInt.prototype.toJSON = function() {
+  return this.toString();
+};
 class CustomerService {
   async getCustomers() {
     try {
@@ -14,9 +18,11 @@ class CustomerService {
 
   async createCustomer(customerData) {
     try {
+      customerData.id_localidad = parseInt(customerData.id_localidad, 10);
       const newCustomer = await prisma.clientes.create({
         data: customerData,
       });
+
       return newCustomer;
     } catch (error) {
       throw new Error('Error creating a customer: ' + error.message);

@@ -17,7 +17,7 @@ export const createVehicle = async (req, res) => {
     const newVehicle = await vehicleService.createVehicle(vehicleData);
     res.json(newVehicle);
   } catch (error) {
-    res.status(500).json({ error: "Error creating a vehicle" });
+    console.log("el error es : " + error);
   }
 };
 
