@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { createCustomerRequest } from "../api/customers";
+import { createCustomerRequest, getCustomersRequest } from "../api/customers";
 
 const CustomerContext = createContext();
 
@@ -17,6 +17,16 @@ export const useCustomers = () => {
 export function CustomerProvider({ children }) {
   const [customers, setCustomers] = useState([]);
 
+  const getCustomers = async (customer) => {
+   try {
+    const res = await getCustomersRequest();
+    setCustomers(res.data)
+   } catch (error) {
+    console.log(error);
+   }
+    
+  };
+
   const createCustomer = async (customer) => {
     const res = await createCustomerRequest(customer);
     console.log(res);
@@ -26,6 +36,7 @@ export function CustomerProvider({ children }) {
       value={{
         customers,
         createCustomer,
+        getCustomers
       }}
     >
       {children}

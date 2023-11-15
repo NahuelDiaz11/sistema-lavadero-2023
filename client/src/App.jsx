@@ -13,15 +13,14 @@ function App() {
     <AuthProvider>
       <CustomerProvider>
         <BrowserRouter>
-          <Routes>
-            <Route path="/login" element={<LoginPage />} />
-
-            <Route element={<ProtectedRoute />}>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/customer" element={<CustomerPage />} />
-              <Route path="/add-customer" element={<CustomerCreatePage />} />
-            </Route>
-          </Routes>
+            <Routes>
+              <Route path="/login" element={<LoginPage />} />
+              <Route element={<ProtectedRoute />}>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/customer" element={<CustomerPage />} />
+                <Route path="/add-customer" element={<CustomerCreatePage />} />
+              </Route>
+            </Routes>
         </BrowserRouter>
       </CustomerProvider>
     </AuthProvider>

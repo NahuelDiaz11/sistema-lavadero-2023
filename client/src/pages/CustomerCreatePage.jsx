@@ -6,11 +6,12 @@ import "../admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css";
 import "../admin/vendor/css/pages/page-auth.css";
 import { useForm } from "react-hook-form";
 import { useCustomers } from "../context/customerContext";
+import { useNavigate } from "react-router-dom";
 
 export default function CustomerCreatePage() {
   const { register, handleSubmit } = useForm();
   const { createCustomer } = useCustomers();
-  console.log(createCustomer);
+  const navigate = useNavigate();
 
   const onSubmit = handleSubmit((data) => {
     
