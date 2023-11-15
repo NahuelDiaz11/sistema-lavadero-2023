@@ -27,8 +27,15 @@ export default function VehiclePage() {
             <div className="content-wrapper">
               <div className="container-xxl flex-grow-1 container-p-y">
                 <h4 className="fw-bold py-3 mb-4">
-                  <span className="text-muted fw-light">Listado</span> Clientes
+                  <span className="text-muted fw-light">Listado</span> Vehiculos
                 </h4>
+                <div className="mb-3">
+                  <Link to="/add-vehicle">
+                    <button type="button" className="btn btn-primary">
+                      Crear Vehiculo
+                    </button>
+                  </Link>
+                </div>
                 <div className="table-responsive text-nowrap">
                   <table className="table card-table">
                     <thead>

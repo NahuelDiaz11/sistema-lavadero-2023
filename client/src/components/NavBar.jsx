@@ -43,53 +43,25 @@ export function NavBar() {
           <a href="javascript:void(0);" className="menu-link menu-toggle">
             <i className="bx bx-user"></i>
             <Link to="/customer">
-              {" "}
-              <div data-i18n="Layouts"> Clientes</div>{" "}
+              <div data-i18n="Layouts"> Clientes</div>
             </Link>
           </a>
-          <ul className="menu-sub">
-            <li className="menu-item">
-              <a href="register-client.html" className="menu-link">
-                <div data-i18n="Without menu">Registrar Cliente</div>
-              </a>
-            </li>
-          </ul>
-          <ul className="menu-sub">
-            <li className="menu-item">
-              <a href="index-clients.html" className="menu-link">
-                <div data-i18n="Without menu">Listado de Clientes</div>
-              </a>
-            </li>
-          </ul>
         </li>
         <li className="menu-item">
           <a href="javascript:void(0);" className="menu-link menu-toggle">
             <i className="bx bx-user"></i>
-            <Link to="/customer">
+            <Link to="/vehicles">
               {" "}
               <div data-i18n="Layouts"> Vehiculos</div>{" "}
             </Link>
           </a>
-          <ul className="menu-sub">
-            <li className="menu-item">
-              <a href="register-client.html" className="menu-link">
-                <div data-i18n="Without menu">Registrar Cliente</div>
-              </a>
-            </li>
-          </ul>
-          <ul className="menu-sub">
-            <li className="menu-item">
-              <a href="index-clients.html" className="menu-link">
-                <div data-i18n="Without menu">Listado de Clientes</div>
-              </a>
-            </li>
-          </ul>
+      
         </li>
 
         <li className="menu-item">
           <a href="javascript:void(0);" className="menu-link menu-toggle">
             <i className="bx bx-user"></i>
-            <Link to="/customer">
+            <Link to="/services">
               {" "}
               <div data-i18n="Layouts"> Servicios</div>{" "}
             </Link>

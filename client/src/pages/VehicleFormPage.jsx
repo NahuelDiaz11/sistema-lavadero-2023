@@ -47,7 +47,7 @@ export default function VehicleFormPage() {
             <div className="col-10">
               <div className="card mb-4">
                 <div className="card-header d-flex justify-content-between align-items-center">
-                  <h5 className="mb-0">Datos del Cliente</h5>
+                  <h5 className="mb-0">Datos del Vehiculo</h5>
                 </div>
                 <div className="card-body">
                   <form onSubmit={onSubmit}>
