@@ -6,7 +6,15 @@ class VehicleService {
   
   async getVehicles() {
     try {
-      const vehicles = await prisma.vehiculos.findMany();
+      const vehicles = await prisma.vehiculos.findMany({
+        include: {
+          modelos: {
+            include: {
+              tipos_vehiculos: true,
+            },
+          }
+        },
+      });
       return vehicles;
     } catch (error) {
       throw new Error('Error fetching vehicles: ' + error.message);

@@ -4,40 +4,44 @@ import "../admin/vendor/css/theme-default.css";
 import "../admin/css/demo.css";
 import "../admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css";
 import "../admin/vendor/css/pages/page-auth.css";
+import { NavBar } from "./../components/NavBar";
 import { useForm } from "react-hook-form";
 import { useVehicles } from "../context/vehicleContext";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 
 export default function VehicleFormPage() {
-  const { register, handleSubmit, setValue} = useForm();
+  const { register, handleSubmit, setValue } = useForm();
   const { createVehicle, getVehicle, updateVehicle } = useVehicles();
   const navigate = useNavigate();
   const params = useParams();
 
   useEffect(() => {
-   async function loadVehicle() {
-    if (params.id){
-      const vehicle = await getVehicle(params.id)
-      console.log(vehicle);
-      setValue('patente', vehicle.patente)
-      setValue('id_modelo', vehicle.id_modelo)
+    async function loadVehicle() {
+      if (params.id) {
+        const vehicle = await getVehicle(params.id);
+        console.log(vehicle);
+        setValue("patente", vehicle.patente);
+        setValue("id_modelo", vehicle.id_modelo);
+      }
     }
-   }
-   loadVehicle();
-  }, [])
+    loadVehicle();
+  }, []);
 
   const onSubmit = handleSubmit((data) => {
     data.id_modelo = parseInt(data.id_modelo, 10);
-   if (params.id){
-    updateVehicle(params.id, data);
-   } else {
-    createVehicle(data);
-  }
-  navigate("/vehicles");
+    if (params.id) {
+      updateVehicle(params.id, data);
+    } else {
+      createVehicle(data);
+    }
+    navigate("/vehicles");
   });
 
   return (
     <div className="layout-page">
+      <div className="col-md-3">
+        <NavBar />
+      </div>
       <div className="content-wrapper">
         <div className="container-xxl flex-grow-1 container-p-y">
           <h4 className="fw-bold py-3 mb-4">
@@ -67,7 +71,7 @@ export default function VehicleFormPage() {
                         autoFocus
                       />
                     </div>
-    
+
                     <div className="mb-3">
                       <label
                         className="form-label"
@@ -85,8 +89,8 @@ export default function VehicleFormPage() {
                           <option value="" disabled hidden>
                             Seleccione...
                           </option>
-                          <option value="1">Toyota</option>
-                          <option value="2">Chevrolet</option>
+                          <option value="1">Chevrolet - Camioneta</option>
+                          <option value="2">Fiat - Camioneta</option>
                         </select>
                         <label
                           className="input-group-text"
@@ -96,10 +100,19 @@ export default function VehicleFormPage() {
                         </label>
                       </div>
                     </div>
-        
-                    <button type="submit" className="btn btn-primary">
-                      Guardar
-                    </button>
+                    <div className="btn-group">
+                      <div className="ms-2">
+                        <button type="submit" className="btn btn-primary">
+                          Guardar
+                        </button>
+                      </div>
+                      <div className="ms-2">
+                        {" "}
+                        <Link to="/vehicles" className="btn btn-secondary">
+                          Volver
+                        </Link>
+                      </div>
+                    </div>
                   </form>
                 </div>
               </div>

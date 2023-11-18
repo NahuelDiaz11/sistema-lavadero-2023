@@ -4,43 +4,47 @@ import "../admin/vendor/css/theme-default.css";
 import "../admin/css/demo.css";
 import "../admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css";
 import "../admin/vendor/css/pages/page-auth.css";
+import { NavBar } from "./../components/NavBar";
 import { useForm } from "react-hook-form";
 import { useCustomers } from "../context/customerContext";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 
 export default function CustomerCreatePage() {
-  const { register, handleSubmit, setValue} = useForm();
+  const { register, handleSubmit, setValue } = useForm();
   const { createCustomer, getCustomer, updateCustomer } = useCustomers();
   const navigate = useNavigate();
   const params = useParams();
 
   useEffect(() => {
-   async function loadCustomer() {
-    if (params.id){
-      const customer = await getCustomer(params.id)
-      console.log(customer);
-      setValue('nombre', customer.nombre)
-      setValue('apellido', customer.apellido)
-      setValue('id_localidad', customer.id_localidad)
-      setValue('celular', customer.celular)
-      setValue('dni', customer.dni)
+    async function loadCustomer() {
+      if (params.id) {
+        const customer = await getCustomer(params.id);
+        console.log(customer);
+        setValue("nombre", customer.nombre);
+        setValue("apellido", customer.apellido);
+        setValue("id_localidad", customer.id_localidad);
+        setValue("celular", customer.celular);
+        setValue("dni", customer.dni);
+      }
     }
-   }
-   loadCustomer();
-  }, [])
+    loadCustomer();
+  }, []);
 
   const onSubmit = handleSubmit((data) => {
     data.id_localidad = parseInt(data.id_localidad, 10);
-   if (params.id){
-    updateCustomer(params.id, data);
-   } else {
-    createCustomer(data);
-  }
-  navigate("/customer");
+    if (params.id) {
+      updateCustomer(params.id, data);
+    } else {
+      createCustomer(data);
+    }
+    navigate("/customer");
   });
 
   return (
     <div className="layout-page">
+      <div className="col-md-3">
+        <NavBar />
+      </div>
       <div className="content-wrapper">
         <div className="container-xxl flex-grow-1 container-p-y">
           <h4 className="fw-bold py-3 mb-4">
@@ -104,6 +108,9 @@ export default function CustomerCreatePage() {
                           </option>
                           <option value="1">Villa Maria</option>
                           <option value="2">Villa Nueva</option>
+                          <option value="3">Bell Ville</option>
+                          <option value="4">Oncativo</option>
+                          <option value="5">Oliva</option>
                         </select>
                         <label
                           className="input-group-text"
@@ -143,9 +150,19 @@ export default function CustomerCreatePage() {
                         {...register("dni", { required: true })}
                       />
                     </div>
-                    <button type="submit" className="btn btn-primary">
-                      Guardar
-                    </button>
+                    <div className="btn-group">
+                    <div className="ms-2">
+                      <button type="submit" className="btn btn-primary">
+                        Guardar
+                      </button>
+                      </div>
+                      <div className="ms-2">
+                        {" "}
+                        <Link to="/customer" className="btn btn-secondary">
+                          Volver
+                        </Link>
+                      </div>
+                    </div>
                   </form>
                 </div>
               </div>

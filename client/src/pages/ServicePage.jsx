@@ -15,7 +15,7 @@ export default function ServicePage() {
   useEffect(() => {
     getServices();
   }, []);
-  
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -63,15 +63,19 @@ export default function ServicePage() {
                           <td>{service.hora_salida}</td>
                           <td>
                             <div className="btn-group">
-                              <Link to={`/service/${service.id}`} ><button type="button" className="btn p-0">
-                          
-                                <box-icon name="edit" class="me-1" style={{color: 'blue'}}></box-icon>{""}
-                              </button> </Link>
-                              <button  onClick={() => {
-                                deleteService(service.id)
+                              <Link to={`/service/${service.id}`}>
+                                <button type="button" className="btn p-0">
+                                  <i className="bx bx-edit display-5"></i>
+                                </button>{" "}
+                              </Link>
+                              <button
+                                onClick={() => {
+                                  deleteService(service.id);
                                 }}
-                              type="button" className="btn p-0">
-                                <box-icon name="trash" class="me-1" style={{color: 'red'}}></box-icon>{""}
+                                type="button"
+                                className="btn p-0"
+                              >
+                                <i className="bx bx-trash display-5"></i>
                               </button>
                             </div>
                           </td>

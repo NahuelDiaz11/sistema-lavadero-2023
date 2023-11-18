@@ -15,7 +15,7 @@ export default function VehiclePage() {
   useEffect(() => {
     getVehicles();
   }, []);
-  
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -27,7 +27,7 @@ export default function VehiclePage() {
             <div className="content-wrapper">
               <div className="container-xxl flex-grow-1 container-p-y">
                 <h4 className="fw-bold py-3 mb-4">
-                  <span className="text-muted fw-light">Listado</span> Vehiculos
+                  <span className="text-muted fw-light">Listado</span> Vehículos
                 </h4>
                 <div className="mb-3">
                   <Link to="/add-vehicle">
@@ -42,7 +42,7 @@ export default function VehiclePage() {
                       <tr>
                         <th>ID</th>
                         <th>Patente</th>
-                        <th>Modelo</th>
+                        <th>Modelo y Tipo de vehiculo</th>
                         <th>Acciones</th>
                       </tr>
                     </thead>
@@ -54,19 +54,25 @@ export default function VehiclePage() {
                             <i className="fab fa-angular fa-lg text-danger me-3"></i>
                             {vehicle.patente}
                           </td>
-                          <td>{vehicle.id_modelo}</td>
-                     
+                          <td>
+                            {vehicle.modelos.nombre} -{" "}
+                            {vehicle.modelos.tipos_vehiculos.nombre}
+                          </td>
                           <td>
                             <div className="btn-group">
-                              <Link to={`/vehicle/${vehicle.id}`} ><button type="button" className="btn p-0">
-                          
-                                <box-icon name="edit" class="me-1" style={{color: 'blue'}}></box-icon>{""}
-                              </button> </Link>
-                              <button  onClick={() => {
-                                deleteVehicle(vehicle.id)
+                              <Link to={`/vehicle/${vehicle.id}`}>
+                                <button type="button" className="btn p-0">
+                                  <i className="bx bx-edit display-5"></i>
+                                </button>{" "}
+                              </Link>
+                              <button
+                                onClick={() => {
+                                  deleteVehicle(vehicle.id);
                                 }}
-                              type="button" className="btn p-0">
-                                <box-icon name="trash" class="me-1" style={{color: 'red'}}></box-icon>{""}
+                                type="button"
+                                className="btn p-0"
+                              >
+                                <i className="bx bx-trash display-5"></i>
                               </button>
                             </div>
                           </td>
