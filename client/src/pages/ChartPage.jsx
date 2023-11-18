@@ -9,6 +9,7 @@ import {
     getVehiclesRequest,
   } from '../api/vehicles';
 
+import { NavBar } from "../components/NavBar"; 
 
 
 Chart.register(ArcElement);
@@ -48,11 +49,12 @@ const ChartPage = () => {
   return (
     <div style={{ display: 'flex' }}>
       <div style={{ flex: '1' }}>
-      <h1>sdadas</h1> {/* Aquí es donde se renderiza tu componente SideNavbar */}
+      <NavBar />
       </div>
       <div style={{ flex: '2' }}>
+      <i className="bx bx-user"></i>
         <h2>Gráfico de Contador de Clientes y Vehículos</h2>
-        <div style={{ maxWidth: '500px', margin: '0 auto' }}> {/* Aquí es donde se ajusta el tamaño del gráfico */}
+        <div style={{ maxWidth: '500px', margin: '0 auto' }}>
           <Doughnut data={data} />
         </div>
       </div>

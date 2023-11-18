@@ -64,14 +64,13 @@ export default function CustomerPage() {
                           <td>
                             <div className="btn-group">
                               <Link to={`/customer/${customer.id}`} ><button type="button" className="btn p-0">
-                          
-                                <box-icon name="edit" class="me-1" style={{color: 'blue'}}></box-icon>{""}
+                              <i className="bx bx-edit display-5"></i>
                               </button> </Link>
                               <button  onClick={() => {
                                 deleteCustomer(customer.id)
                                 }}
                               type="button" className="btn p-0">
-                                <box-icon name="trash" class="me-1" style={{color: 'red'}}></box-icon>{""}
+                                <i className="bx bx-trash display-5"></i>
                               </button>
                             </div>
                           </td>
