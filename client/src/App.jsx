@@ -13,6 +13,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import { CustomerProvider } from "./context/customerContext";
 import { VehicleProvider } from "./context/vehicleContext";
 import { ServiceProvider } from "./context/serviceContext";
+import ChartPage from './pages/ChartPage';
 
 function App() {
   return (
@@ -36,6 +37,8 @@ function App() {
                 <Route path="/services" element={<ServicePage />} />
                 <Route path="/add-service" element={<ServiceFormPage />} />
                 <Route path="/service/:id" element={<ServiceFormPage />} />
+
+                <Route path="/chart" element={<ChartPage />} />
 
               </Route>
             </Routes>

@@ -9,7 +9,11 @@ BigInt.prototype.toJSON = function() {
 class CustomerService {
   async getCustomers() {
     try {
-      const customers = await prisma.clientes.findMany();
+      const customers = await prisma.clientes.findMany({
+        include: {
+          localidades: true,
+        },
+      });
       return customers;
     } catch (error) {
       throw new Error('Error fetching customers: ' + error.message);

@@ -60,7 +60,7 @@ export default function CustomerPage() {
                           <td>{customer.apellido}</td>
                           <td>{customer.celular}</td>
                           <td>{customer.dni}</td>
-                          <td>{customer.id_localidad}</td>
+                          <td>{customer.localidades.nombre}</td>
                           <td>
                             <div className="btn-group">
                               <Link to={`/customer/${customer.id}`} ><button type="button" className="btn p-0">

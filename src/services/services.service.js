@@ -20,6 +20,7 @@ class ServiceService {
       });
       return newService;
     } catch (error) {
+      console.error('Error creating a service:', error);
       throw new Error('Error creating a service: ' + error.message);
     }
   }

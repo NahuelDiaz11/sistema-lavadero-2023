@@ -42,7 +42,7 @@ export default function VehiclePage() {
                       <tr>
                         <th>ID</th>
                         <th>Patente</th>
-                        <th>Modelo</th>
+                        <th>Modelo y Tipo de vehiculo</th>      
                         <th>Acciones</th>
                       </tr>
                     </thead>
@@ -54,8 +54,7 @@ export default function VehiclePage() {
                             <i className="fab fa-angular fa-lg text-danger me-3"></i>
                             {vehicle.patente}
                           </td>
-                          <td>{vehicle.id_modelo}</td>
-                     
+                          <td>{vehicle.modelos.nombre} - {vehicle.modelos.tipos_vehiculos.nombre}</td>                                                        
                           <td>
                             <div className="btn-group">
                               <Link to={`/vehicle/${vehicle.id}`} ><button type="button" className="btn p-0">

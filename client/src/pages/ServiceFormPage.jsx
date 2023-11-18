@@ -4,9 +4,10 @@ import "../admin/vendor/css/theme-default.css";
 import "../admin/css/demo.css";
 import "../admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css";
 import "../admin/vendor/css/pages/page-auth.css";
+import { NavBar } from "./../components/NavBar";
 import { useForm } from "react-hook-form";
 import { useServices } from "../context/serviceContext";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 
 export default function ServiceFormPage() {
   const { register, handleSubmit, setValue } = useForm();
@@ -42,6 +43,9 @@ export default function ServiceFormPage() {
 
   return (
     <div className="layout-page">
+      <div className="col-md-3">
+        <NavBar />
+      </div>
       <div className="content-wrapper">
         <div className="container-xxl flex-grow-1 container-p-y">
           <h4 className="fw-bold py-3 mb-4">
@@ -88,7 +92,7 @@ export default function ServiceFormPage() {
                         className="form-label"
                         htmlFor="inputGroupSelect02"
                       >
-                        Cliente
+                        Vehiculo
                       </label>
                       <div className="input-group">
                         <select
@@ -122,7 +126,7 @@ export default function ServiceFormPage() {
                         type="text"
                         className="form-control"
                         id="basic-default-fullname"
-                        placeholder="01/12/2023"
+                        placeholder="2023-12-12T00:00:00Z"
                         {...register("fecha", { required: true })}
                         autoFocus
                       />
@@ -138,7 +142,7 @@ export default function ServiceFormPage() {
                         type="text"
                         className="form-control"
                         id="basic-default-fullname"
-                        placeholder="12:00"
+                        placeholder="2023-12-12T17:00:00Z"
                         {...register("hora_llegada", { required: true })}
                         autoFocus
                       />
@@ -155,15 +159,25 @@ export default function ServiceFormPage() {
                         type="text"
                         className="form-control"
                         id="basic-default-fullname"
-                        placeholder="17:00"
+                        placeholder="2023-12-12T18:00:00Z"
                         {...register("hora_salida", { required: true })}
                         autoFocus
                       />
                     </div>
 
-                    <button type="submit" className="btn btn-primary">
-                      Guardar
-                    </button>
+                    <div className="btn-group">
+                      <div className="ms-2">
+                        <button type="submit" className="btn btn-primary">
+                          Guardar
+                        </button>
+                      </div>
+                      <div className="ms-2">
+                        {" "}
+                        <Link to="/services" className="btn btn-secondary">
+                          Volver
+                        </Link>
+                      </div>
+                    </div>
                   </form>
                 </div>
               </div>
