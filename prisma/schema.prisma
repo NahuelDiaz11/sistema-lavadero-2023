@@ -10,10 +10,10 @@ datasource db {
 model clientes {
   id           Int          @id @default(autoincrement())
   nombre       String?      @db.VarChar(15)
-  apellido     String?      @db.VarChar(15)
+  apellido     String       @db.VarChar(255)
+  dni          BigInt
+  celular      BigInt
   id_localidad Int?
-  dni          BigInt?
-  celular      BigInt?
   localidades  localidades? @relation(fields: [id_localidad], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "clientes_ibfk_1")
   servicios    servicios[]
 
@@ -38,23 +38,27 @@ model modelos {
 }
 
 model servicios {
-  id           Int       @id @default(autoincrement())
-  fecha        DateTime? @db.Date
-  hora_entrada DateTime? @db.Time(0)
-  hora_salida  DateTime? @db.Time(0)
-  id_vehiculo  Int?
-  id_cliente   Int?
-  clientes     clientes? @relation(fields: [id_cliente], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "servicios_ibfk_2")
+  id                                        Int                                         @id @default(autoincrement())
+  fecha                                     DateTime?                                   @db.Date
+  precio                                    Decimal                                     @db.Decimal(10, 2)
+  hora_entrada                              DateTime?                                   @db.Time(0)
+  hora_salida                               DateTime?                                   @db.Time(0)
+  id_vehiculo                               Int?
+  id_cliente                                Int?
+  vehiculos                                 vehiculos?                                  @relation(fields: [id_vehiculo], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "servicios_ibfk_1")
+  clientes                                  clientes?                                   @relation(fields: [id_cliente], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "servicios_ibfk_2")
+  servicios_tipos_servicios_tipos_vehiculos servicios_tipos_servicios_tipos_vehiculos[]
 
   @@index([id_cliente], map: "id_cliente")
-  @@index([id_vehiculo], map: "id_vehiculo")
+  @@index([id_vehiculo], map: "servicios_ibfk_1")
 }
 
 model servicios_tipos_servicios_tipos_vehiculos {
-  id                              Int                              @id @default(autoincrement())
+  id                              Int                              @id
   precio_total                    Int?
   id_servicio                     Int?
   id_tipo_servicio_vehiculo       Int?
+  servicios                       servicios?                       @relation(fields: [id_servicio], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "servicios_tipos_servicios_tipos_vehiculos_ibfk_1")
   tipos_servicios_tipos_vehiculos tipos_servicios_tipos_vehiculos? @relation(fields: [id_tipo_servicio_vehiculo], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "servicios_tipos_servicios_tipos_vehiculos_ibfk_2")
 
   @@index([id_servicio], map: "id_servicio")
@@ -62,8 +66,9 @@ model servicios_tipos_servicios_tipos_vehiculos {
 }
 
 model tipos_servicios {
-  id     Int     @id @default(autoincrement())
-  nombre String? @db.VarChar(25)
+  id                              Int                               @id
+  nombre                          String?                           @db.VarChar(25)
+  tipos_servicios_tipos_vehiculos tipos_servicios_tipos_vehiculos[]
 }
 
 model tipos_servicios_tipos_vehiculos {
@@ -71,6 +76,7 @@ model tipos_servicios_tipos_vehiculos {
   id_tipo_servicio                          Int?
   id_tipo_vehiculo                          Int?
   servicios_tipos_servicios_tipos_vehiculos servicios_tipos_servicios_tipos_vehiculos[]
+  tipos_servicios                           tipos_servicios?                            @relation(fields: [id_tipo_servicio], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tipos_servicios_tipos_vehiculos_ibfk_1")
   tipos_vehiculos                           tipos_vehiculos?                            @relation(fields: [id_tipo_vehiculo], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tipos_servicios_tipos_vehiculos_ibfk_2")
 
   @@index([id_tipo_servicio], map: "id_tipo_servicio")
@@ -85,18 +91,20 @@ model tipos_vehiculos {
 }
 
 model vehiculos {
-  id        Int      @id @default(autoincrement())
-  patente   String?  @db.VarChar(7)
+  id        Int         @id @default(autoincrement())
+  patente   String?     @db.VarChar(7)
   id_modelo Int?
-  modelos   modelos? @relation(fields: [id_modelo], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "vehiculos_ibfk_1")
+  servicios servicios[]
+  modelos   modelos?    @relation(fields: [id_modelo], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "vehiculos_ibfk_1")
 
   @@index([id_modelo], map: "id_modelo")
 }
 
 model usuarios {
-  id       Int    @id @default(autoincrement())
-  nombre   String @db.VarChar(50)
-  apellido String @db.VarChar(50)
-  email    String @unique(map: "email") @db.VarChar(50)
-  pass     String @db.VarChar(100)
+  id       Int     @id @default(autoincrement())
+  nombre   String? @db.VarChar(255)
+  apellido String? @db.VarChar(255)
+  email    String? @unique(map: "email") @db.VarChar(255)
+  pass     String? @db.VarChar(255)
+  rol      String? @db.VarChar(255)
 }
