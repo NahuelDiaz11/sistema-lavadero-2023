@@ -46,7 +46,6 @@ function LoginPage() {
                   </span>
                 </a>
               </div>
-              {/* Logo */}
               <h4 className="mb-2">Bienvenido</h4>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-3">

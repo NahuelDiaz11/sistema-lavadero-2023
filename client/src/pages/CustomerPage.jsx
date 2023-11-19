@@ -9,13 +9,16 @@ import { NavBar } from "./../components/NavBar";
 import "boxicons";
 import "boxicons/css/boxicons.min.css";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 
 export default function CustomerPage() {
   const { getCustomers, customers, deleteCustomer } = useCustomers();
+  const { isAdmin } = useAuth();
+
   useEffect(() => {
     getCustomers();
   }, []);
-  
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -62,17 +65,27 @@ export default function CustomerPage() {
                           <td>{customer.dni}</td>
                           <td>{customer.localidades.nombre}</td>
                           <td>
-                            <div className="btn-group">
-                              <Link to={`/customer/${customer.id}`} ><button type="button" className="btn p-0">
-                              <i className="bx bx-edit display-5"></i>
-                              </button> </Link>
-                              <button  onClick={() => {
-                                deleteCustomer(customer.id)
+                            {isAdmin ? (
+                              <div>Sin permisos</div>
+                               
+                            ) : (
+                              <div className="btn-group">
+                              <Link to={`/customer/${customer.id}`}>
+                                <button type="button" className="btn p-0">
+                                  <i className="bx bx-edit display-5"></i>
+                                </button>{" "}
+                              </Link>
+                              <button
+                                onClick={() => {
+                                  deleteCustomer(customer.id);
                                 }}
-                              type="button" className="btn p-0">
+                                type="button"
+                                className="btn p-0"
+                              >
                                 <i className="bx bx-trash display-5"></i>
                               </button>
                             </div>
+                            )}
                           </td>
                         </tr>
                       ))}

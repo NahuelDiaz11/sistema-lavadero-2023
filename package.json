@@ -7,6 +7,9 @@
   "scripts": {
     "dev": "nodemon src/index.js"
   },
+  "prisma": {
+    "schema": "./prisma/schema.prisma"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

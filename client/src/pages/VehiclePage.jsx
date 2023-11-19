@@ -9,9 +9,12 @@ import { NavBar } from "./../components/NavBar";
 import "boxicons";
 import "boxicons/css/boxicons.min.css";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 
 export default function VehiclePage() {
   const { getVehicles, vehicles, deleteVehicle } = useVehicles();
+  const { isAdmin } = useAuth();
+
   useEffect(() => {
     getVehicles();
   }, []);
@@ -59,15 +62,19 @@ export default function VehiclePage() {
                             {vehicle.modelos.tipos_vehiculos.nombre}
                           </td>
                           <td>
-                            <div className="btn-group">
-                              <Link to={`/vehicle/${vehicle.id}`}>
+                          {isAdmin ? (
+                              <div>Sin permisos</div>
+                               
+                            ) : (
+                              <div className="btn-group">
+                              <Link to={`/customer/${customer.id}`}>
                                 <button type="button" className="btn p-0">
                                   <i className="bx bx-edit display-5"></i>
                                 </button>{" "}
                               </Link>
                               <button
                                 onClick={() => {
-                                  deleteVehicle(vehicle.id);
+                                  deleteCustomer(customer.id);
                                 }}
                                 type="button"
                                 className="btn p-0"
@@ -75,6 +82,7 @@ export default function VehiclePage() {
                                 <i className="bx bx-trash display-5"></i>
                               </button>
                             </div>
+                            )}
                           </td>
                         </tr>
                       ))}
