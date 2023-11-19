@@ -40,25 +40,31 @@ export function NavBar() {
         <li className="menu-item">
           <Link to="/customer" className="menu-link menu-toggle">
             <i className="bx bx-user"></i>
-            <div data-i18n="Layouts"> Clientes</div>
+            <div data-i18n="Layouts" className="ms-2"> Clientes</div>
           </Link>
         </li>
         <li className="menu-item">
           <Link to="/vehicles" className="menu-link menu-toggle">
             <i className="bx bx-car"></i>
-            <div data-i18n="Layouts"> Vehículos</div>
+            <div data-i18n="Layouts" className="ms-2"> Vehículos</div>
           </Link>
         </li>
         <li className="menu-item">
           <Link to="/services" className="menu-link menu-toggle">
             <i className="bx bx-cog"></i>
-            <div data-i18n="Layouts"> Servicios</div>
+            <div data-i18n="Layouts" className="ms-2"> Servicios</div>
           </Link>
         </li>
 
         <li className="menu-header small text-uppercase">
-          <span className="menu-header-text">Cuentas</span>
+          <span className="menu-header-text ms-2">Cuentas</span>
         </li>
+        <li className="menu-item">
+        <Link className="menu-link menu-toggle d-flex align-items-center">
+          <i className='bx bx-user-plus'></i>
+          <div data-i18n="Authentications" className="ms-2">Registrar Usuario</div>
+        </Link>
+      </li>
         <li className="menu-item">
           <Link
             to="/login"
@@ -66,13 +72,13 @@ export function NavBar() {
             className="menu-link menu-toggle"
           >
             <i className="menu-icon tf-icons bx bx-dock-top"></i>
-            <div data-i18n="Account Settings">Cerrar sesión</div>
+            <div data-i18n="Account Settings" className="ms-2">Cerrar sesión</div>
           </Link>
         </li>
         <li className="menu-item">
           <Link className="menu-link menu-toggle">
             <i className="menu-icon tf-icons bx bx-lock-open-alt"></i>
-            <div data-i18n="Authentications">Autenticación</div>
+            <div data-i18n="Authentications" className="ms-2">Autenticación</div>
           </Link>
         </li>
       </ul>

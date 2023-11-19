@@ -8,6 +8,7 @@ import VehiclePage from "./pages/VehiclePage";
 import VehicleFormPage from "./pages/VehicleFormPage";
 import ServicePage from "./pages/ServicePage";
 import ServiceFormPage from "./pages/ServiceFormPage";
+import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
 import ProtectedRoute from "./ProtectedRoute";
 import { CustomerProvider } from "./context/customerContext";
@@ -39,6 +40,8 @@ function App() {
                 <Route path="/service/:id" element={<ServiceFormPage />} />
 
                 <Route path="/chart" element={<ChartPage />} />
+
+                <Route path="/register" element={<RegisterPage />} />
 
               </Route>
             </Routes>
