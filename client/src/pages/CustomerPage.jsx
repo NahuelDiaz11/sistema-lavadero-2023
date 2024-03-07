@@ -13,8 +13,7 @@ import { useAuth } from "../context/authContext";
 
 export default function CustomerPage() {
   const { getCustomers, customers, deleteCustomer } = useCustomers();
-  const { isAdmin } = useAuth();
-
+  const { isAdmin, isOperario, user } = useAuth();
   useEffect(() => {
     getCustomers();
   }, []);
@@ -65,7 +64,7 @@ export default function CustomerPage() {
                           <td>{customer.dni}</td>
                           <td>{customer.localidades.nombre}</td>
                           <td>
-                            {isAdmin ? (
+                            {isOperario ? (
                               <div>Sin permisos</div>
                                
                             ) : (

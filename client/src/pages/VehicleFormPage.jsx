@@ -90,7 +90,7 @@ export default function VehicleFormPage() {
                             Seleccione...
                           </option>
                           <option value="1">Chevrolet - Camioneta</option>
-                          <option value="2">Fiat - Camioneta</option>
+                          <option value="2">Ford - Coupe</option>
                         </select>
                         <label
                           className="input-group-text"

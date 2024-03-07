@@ -10,11 +10,16 @@ export const registerSchema = z.object({
   email: z.string({
     required_error: "El email es requerido",
   }),
-  pass: z.string({
-    required_error: "La contraseña es requerida",
-  }).min(6, {
+  pass: z
+    .string({
+      required_error: "La contraseña es requerida",
+    })
+    .min(6, {
       message: "La contraseña debe tener al menos 6 caracteres",
     }),
+  rol: z.string({
+    required_error: "El rol es requerido",
+  }),
 });
 
 export const loginSchema = z.object({

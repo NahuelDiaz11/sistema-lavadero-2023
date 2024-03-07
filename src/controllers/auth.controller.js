@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 
 export const register = async (req, res) => {
   try {
-    const { nombre, apellido, email, pass } = req.body;
+    const { nombre, apellido, email, pass, rol } = req.body;
     const passwordHash = await bcrypt.hash(pass, 5);
 
     const newUser = await prisma.usuarios.create({
@@ -17,6 +17,7 @@ export const register = async (req, res) => {
         apellido,
         email,
         pass: passwordHash,
+        rol,
       },
     });
 
@@ -66,6 +67,7 @@ export const login = async (req, res) => {
       nombre: userFound.nombre,
       apellido: userFound.apellido,
       email: userFound.email,
+      rol: userFound.rol,
     });
   } catch (error) {
     res.status(500).json({ error: "Error registering user" });
@@ -115,12 +117,13 @@ export const verifyTokenRequest = async (req, res) => {
     const userFound = await prisma.usuarios.findUnique({
       where: { id: user.id },
     });
-
+    console.log("el usuario Found es: " + JSON.stringify(userFound, null, 2));
     if (!userFound) return res.status(401).json({ message: "Unauthorized" });
 
     return res.json({
       id: userFound.id,
       email: userFound.email,
+      rol: userFound.rol,
     });
   });
 };

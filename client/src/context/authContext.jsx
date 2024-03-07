@@ -90,8 +90,8 @@ export const AuthProvider = ({ children }) => {
         isAuthenticated,
         errors,
         loading,
-        isAdmin: user?.role === 'admin',
-        isOperario: user?.role === 'operario',
+        isAdmin: user?.rol === 'admin',
+        isOperario: user?.rol === 'operario',
       }}
     >
       {children}

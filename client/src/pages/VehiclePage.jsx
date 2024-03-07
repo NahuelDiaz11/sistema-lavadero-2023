@@ -13,7 +13,7 @@ import { useAuth } from "../context/authContext";
 
 export default function VehiclePage() {
   const { getVehicles, vehicles, deleteVehicle } = useVehicles();
-  const { isAdmin } = useAuth();
+  const { isAdmin, isOperario } = useAuth();
 
   useEffect(() => {
     getVehicles();
@@ -62,19 +62,19 @@ export default function VehiclePage() {
                             {vehicle.modelos.tipos_vehiculos.nombre}
                           </td>
                           <td>
-                          {isAdmin ? (
+                          {isOperario ? (
                               <div>Sin permisos</div>
                                
                             ) : (
                               <div className="btn-group">
-                              <Link to={`/customer/${customer.id}`}>
+                              <Link to={`/vehicle/${vehicle.id}`}>
                                 <button type="button" className="btn p-0">
                                   <i className="bx bx-edit display-5"></i>
                                 </button>{" "}
                               </Link>
                               <button
                                 onClick={() => {
-                                  deleteCustomer(customer.id);
+                                  deleteCustomer(vehicle.id);
                                 }}
                                 type="button"
                                 className="btn p-0"

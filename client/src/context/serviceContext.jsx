@@ -59,6 +59,26 @@ export function ServiceProvider({ children }) {
     }
   };
 
+  const getServicesByVehicle = async (vehicleId) => {
+    try {
+      const vehicleResponse = await axios.get(
+        `http://localhost:3000/api/vehicles/${vehicleId}`
+      );
+      const vehicleModel = vehicleResponse.data;
+
+      if (!vehicleModel) return [];
+
+      const servicesResponse = await axios.get(
+        `http://localhost:3000/api/services-by-vehicle/${vehicleModel.tipo_vehiculo}`
+      );
+
+      return servicesResponse.data;
+    } catch (error) {
+      console.error('Error fetching services by vehicle:', error);
+      return [];
+    }
+  };
+
   return (
     <ServiceContext.Provider
       value={{
@@ -67,7 +87,8 @@ export function ServiceProvider({ children }) {
         getServices,
         deleteService,
         getService,
-        updateService
+        updateService,
+        getServicesByVehicle
       }}
     >
       {children}

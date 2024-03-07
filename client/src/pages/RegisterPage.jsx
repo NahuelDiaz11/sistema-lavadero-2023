@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 
-export default function RegisterPage() {
+export default function Register() {
   const { signup, errors: registerErrors, isAuthenticated } = useAuth();
   const {
     register,
@@ -23,9 +23,6 @@ export default function RegisterPage() {
   const onSubmit = async (value) => {
     await signup(value);
   };
-
-
-
 
   return (
     <div className="layout-page">
@@ -44,7 +41,7 @@ export default function RegisterPage() {
                   <h5 className="mb-0">Datos del Usuario</h5>
                 </div>
                 <div className="card-body">
-                  <form onSubmit={onSubmit}>
+                  <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="mb-3">
                       <label
                         className="form-label"

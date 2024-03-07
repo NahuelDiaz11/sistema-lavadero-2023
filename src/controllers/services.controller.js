@@ -54,3 +54,20 @@ export const deleteService = async (req, res) => {
     res.status(500).json({ error: "Service not found" });
   }
 };
+
+export const getServiceTypesByVehicle = async (req, res) => {
+  const tipoVehiculoId = parseInt(req.params.id);
+
+  try {
+    const serviceTypes = await serviceService.getServiceTypesByVehicle(tipoVehiculoId);
+    
+    if (!serviceTypes) {
+      res.status(404).json({ error: "Service types not found for the given vehicle ID" });
+    } else {
+      res.json(serviceTypes);
+    }
+  } catch (error) {
+    console.error("Error fetching service types by vehicle:", error);
+    res.status(500).json({ error: "Error fetching service types by vehicle" });
+  }
+};

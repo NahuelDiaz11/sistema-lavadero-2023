@@ -71,6 +71,20 @@ class VehicleService {
       throw new Error('Error deleting a vehicle: ' + error.message);
     }
   }
+
+  async getModelById(modelId) {
+    try {
+      const model = await prisma.modelos.findUnique({
+        where: {
+          id: modelId,
+        },
+      });
+      return model;
+    } catch (error) {
+      throw new Error('Error fetching a model by ID: ' + error.message);
+    }
+  }
 }
+
 
 export default VehicleService;

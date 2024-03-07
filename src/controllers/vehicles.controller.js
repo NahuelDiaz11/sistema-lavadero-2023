@@ -53,3 +53,13 @@ export const deleteVehicle = async (req, res) => {
     res.status(500).json({ error: "Vehicle not found" });
   }
 };
+
+export const getModel = async (req, res) => {
+  const modelId = parseInt(req.params.id);
+  try {
+    const model = await vehicleService.getModelById(modelId);
+    return res.json(model);
+  } catch (error) {
+    res.status(500).json({ error: "Model not found" });
+  }
+};

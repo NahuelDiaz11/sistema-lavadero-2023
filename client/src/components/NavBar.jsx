@@ -60,7 +60,10 @@ export function NavBar() {
           <span className="menu-header-text ms-2">Cuentas</span>
         </li>
         <li className="menu-item">
-        <Link className="menu-link menu-toggle d-flex align-items-center">
+        <Link
+            to="/register"
+            className="menu-link menu-toggle"
+          >
           <i className='bx bx-user-plus'></i>
           <div data-i18n="Authentications" className="ms-2">Registrar Usuario</div>
         </Link>

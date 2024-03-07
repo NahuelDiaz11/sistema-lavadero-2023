@@ -15,10 +15,19 @@ class ServiceService {
 
   async createService(serviceData) {
     try {
-      const newService = await prisma.servicios.create({
-        data: serviceData,
+      const service = await prisma.servicios.create({
+        data: {
+          ...serviceData,
+          servicios_tipos_servicios_tipos_vehiculos: {
+            create: serviceData.servicios_tipos_servicios_tipos_vehiculos,
+          },
+        },
+        include: {
+          servicios_tipos_servicios_tipos_vehiculos: true,
+        },
       });
-      return newService;
+
+      return service;
     } catch (error) {
       console.error('Error creating a service:', error);
       throw new Error('Error creating a service: ' + error.message);
@@ -64,6 +73,39 @@ class ServiceService {
       throw new Error('Error deleting a service: ' + error.message);
     }
   }
+
+  async getServiceTypesByVehicle(tipoVehiculoId) {
+    try {
+      const tiposVehiculo = await prisma.modelos.findUnique({
+        where: {
+          id: tipoVehiculoId,
+        },
+        include: {
+          tipos_vehiculos: {
+            include: {
+              tipos_servicios_tipos_vehiculos: {
+                include: {
+                  tipos_servicios: true,
+                },
+              },
+            },
+          },
+        },
+      });
+  
+      if (!tiposVehiculo) {
+        throw new Error(`Tipo de vehículo with ID ${tipoVehiculoId} not found`);
+      }
+  
+      const tiposServiciosTiposVehiculos = tiposVehiculo.tipos_vehiculos?.tipos_servicios_tipos_vehiculos || [];
+      const result = tiposServiciosTiposVehiculos.flatMap((entry) => entry.tipos_servicios);
+  
+      return result;
+    } catch (error) {
+      console.error('Error fetching service types by vehicle:', error);
+      throw new Error('Error fetching service types by vehicle: ' + error.message);
+    }
+  };
 }
 
 export default ServiceService;
