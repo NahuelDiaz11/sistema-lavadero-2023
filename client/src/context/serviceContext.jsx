@@ -17,15 +17,19 @@ export const useServices = () => {
 export function ServiceProvider({ children }) {
   const [services, setServices] = useState([]);
 
-  const getServices = async (service) => {
-   try {
-    const res = await getServicesRequest();
-    setServices(res.data)
-   } catch (error) {
-    console.log(error);
-   }
-    
+  const getServices = async (startDate, endDate) => {
+    try {
+      const res = await getServicesRequest(startDate, endDate);
+      if (res && res.data) {
+        setServices(res.data);
+      } else {
+        console.log("No se recibieron datos de servicios filtrados.");
+      }
+    } catch (error) {
+      console.error("Error al obtener servicios filtrados:", error);
+    }
   };
+  
 
   const createService = async (service) => {
     const res = await createServiceRequest(service);

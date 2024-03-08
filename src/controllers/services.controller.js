@@ -3,8 +3,9 @@ const serviceService = new ServiceService();
 
 export const getServices = async (req, res) => {
   try {
-    const services = await serviceService.getServices();
-    
+    const { startDate, endDate } = req.query;
+    const services = await serviceService.getServices(startDate, endDate);
+
     res.json(services);
   } catch (error) {
     console.error("Error fetching services:", error);
@@ -57,7 +58,7 @@ export const deleteService = async (req, res) => {
 
 export const getServiceTypesByVehicle = async (req, res) => {
   const tipoVehiculoId = parseInt(req.params.id);
-
+ 
   try {
     const serviceTypes = await serviceService.getServiceTypesByVehicle(tipoVehiculoId);
     

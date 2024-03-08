@@ -10,16 +10,18 @@ import { useForm } from "react-hook-form";
 import { useServices } from "../context/serviceContext";
 import { useVehicles } from "../context/vehicleContext";
 import { useNavigate, useParams, Link } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function ServiceFormPage() {
   const { register, handleSubmit, setValue } = useForm();
-  const { createService, getService, updateService } =
-    useServices();
+  const { createService, getService, updateService } = useServices();
   const { getVehicles, vehicles } = useVehicles();
   const navigate = useNavigate();
   const params = useParams();
   const [selectedVehicleId, setSelectedVehicleId] = useState("");
   const [services, setServices] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   useEffect(() => {
     getVehicles();
@@ -32,8 +34,6 @@ export default function ServiceFormPage() {
         setValue("patente", service.patente);
         setValue("fecha", service.fecha);
         setValue("id_cliente", service.id_cliente);
-        setValue("hora_llegada", service.hora_llegada);
-        setValue("hora_salida", service.hora_salida);
         setValue("id_vehiculo", service.id_vehiculo);
       }
     }
@@ -42,15 +42,15 @@ export default function ServiceFormPage() {
 
   const handleVehicleChange = async (event) => {
     const vehicleId = event.target.value;
-    setSelectedVehicleId(vehicleId); 
-    console.log('vehicleId:', vehicleId);
+    setSelectedVehicleId(vehicleId);
+    console.log("vehicleId:", vehicleId);
 
     const response = await axios.get(
       `http://localhost:3000/api/vehicles/${vehicleId}`,
       { withCredentials: true }
     );
     const modelId = response.data.id_modelo;
-    console.log('model response:', modelId);
+    console.log("model response:", modelId);
 
     if (!modelId) return;
 
@@ -58,12 +58,20 @@ export default function ServiceFormPage() {
       `http://localhost:3000/api/services-by-vehicle/${modelId}`,
       { withCredentials: true }
     );
-    console.log('services response:', servicesResponse.data);
+    
     setServices(servicesResponse.data);
+  };
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    setValue("fecha", date); // Setear el valor en el formulario
   };
 
   const onSubmit = handleSubmit((data) => {
     data.id_cliente = parseInt(data.id_cliente, 10);
+    data.id_tipo_servicio = parseInt(data.id_tipo_servicio, 10);
+    data.id_vehiculo = parseInt(data.id_vehiculo, 10);
+    data.precio = parseInt(data.precio, 10);
     if (params.id) {
       updateService(params.id, data);
     } else {
@@ -107,8 +115,8 @@ export default function ServiceFormPage() {
                           <option value="" disabled hidden>
                             Seleccione...
                           </option>
-                          <option value="1">Nahuel Diaz</option>
-                          <option value="2">Franco Morellato</option>
+                          <option value="2">daniel</option>
+                          <option value="3">Nahuel</option>
                         </select>
                         <label
                           className="input-group-text"
@@ -184,55 +192,37 @@ export default function ServiceFormPage() {
                     </div>
 
                     <div className="mb-3">
+                      <label className="form-label" htmlFor="inputPrecio">
+                        Precio
+                      </label>
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="inputPrecio"
+                        {...register("precio", { required: true })}
+                        autoFocus
+                      />
+                    </div>
+
+
+                    <div className="mb-3">
                       <label
                         className="form-label"
                         htmlFor="basic-default-fullname"
                       >
                         Fecha
                       </label>
-                      <input
-                        type="text"
+                      <DatePicker
+                        selected={selectedDate}
+                        onChange={handleDateChange}
+                        showTimeInput
+                        dateFormat="yyyy-MM-dd"
                         className="form-control"
                         id="basic-default-fullname"
-                        placeholder="2023-12-12T00:00:00Z"
-                        {...register("fecha", { required: true })}
-                        autoFocus
+                        placeholderText="Selecciona una fecha y hora"
+                        required
                       />
                     </div>
-                    <div className="mb-3">
-                      <label
-                        className="form-label"
-                        htmlFor="basic-default-fullname"
-                      >
-                        Hora de llegada
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="basic-default-fullname"
-                        placeholder="2023-12-12T17:00:00Z"
-                        {...register("hora_llegada", { required: true })}
-                        autoFocus
-                      />
-                    </div>
-
-                    <div className="mb-3">
-                      <label
-                        className="form-label"
-                        htmlFor="basic-default-fullname"
-                      >
-                        hora_salida
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="basic-default-fullname"
-                        placeholder="2023-12-12T18:00:00Z"
-                        {...register("hora_salida", { required: true })}
-                        autoFocus
-                      />
-                    </div>
-
                     <div className="btn-group">
                       <div className="ms-2">
                         <button type="submit" className="btn btn-primary">

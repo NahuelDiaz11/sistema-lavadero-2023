@@ -1,6 +1,13 @@
 import axios from "./axios";
 
-export const getServicesRequest = () => axios.get(`/services`);
+export const getServicesRequest = (startDate, endDate) => {
+  const params = {
+    startDate: startDate,
+    endDate: endDate
+  };
+
+  return axios.get('/services', { params });
+};
 
 export const getServiceRequest = (id) => axios.get(`/services/${id}`);
 export const createServiceRequest = async (service) =>
